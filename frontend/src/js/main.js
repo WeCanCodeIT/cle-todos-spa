@@ -1,6 +1,7 @@
 // List of imports
 import Header from './components/Header';
 import Footer from './components/Footer';
+import apiActions from './api/apiActions';
 
 pageBuild();
 
@@ -18,3 +19,4 @@ function footer(){
     const footer = document.querySelector('#footer');
     footer.innerHTML = Footer();
 }
+

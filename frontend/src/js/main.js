@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Todos from './components/Todos';
 import apiActions from './api/apiActions';
 
-pageBuild();
+export default pageBuild;
 
 function pageBuild(){
     header();
@@ -34,7 +34,12 @@ function navHome(){
 function navTodo(){
     const todosButton = document.querySelector(".nav__todos");
     todosButton.addEventListener("click", function() {
-        alert('you clicked the todo button');
-      document.querySelector('#app').innerHTML = Todos(todos);
+        apiActions.getRequest("https://localhost:44393/api/todos",
+            todos => {
+                console.log(todos);
+                document.querySelector('#app').innerHTML = Todos(todos);
+            }
+        )
       });
 }
+

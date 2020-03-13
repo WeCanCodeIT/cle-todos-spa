@@ -7,7 +7,7 @@ export default function Todos(todos){
                     <h3>${todo}</h3>
                 </li>
                 `  
-            })}          
+            }).join("")}          
         </ul>
     `
 }

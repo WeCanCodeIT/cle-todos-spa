@@ -41,6 +41,7 @@ namespace todos.Tests
             Assert.Equal(2, countOfTodos);
         }
 
+        // Alternative test for Get() action
         [Fact]
         public void Get_Returns_List_of_Todos()
         {
@@ -54,6 +55,28 @@ namespace todos.Tests
             var result = underTest.Get();
 
             Assert.Equal(expectedTodos, result.ToList());
+        }
+
+        [Fact]
+        public void Post_Creates_New_Todo()
+        {
+            // arrange
+            var newTodo = new Todo(1, "New todo", "Owner name");
+            var todoList = new List<Todo>();
+
+            // Use When..Do to substitute for methods that don't return a value, like the Repository method Create()
+            // When() allows us to call the method on the substitute and pass an argument
+            // Do() allows us to pass a callback function that executes when the method is called
+            todoRepo.When(t => t.Create(newTodo))
+                .Do(t => todoList.Add(newTodo));
+
+            todoRepo.GetAll().Returns(todoList);
+
+            // act
+            var result = underTest.Post(newTodo);
+
+            // assert
+            Assert.Contains(newTodo, result);
         }
     }
 }

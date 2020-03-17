@@ -48,11 +48,12 @@ namespace todos.Controllers
 
         // POST: api/Todos
         [HttpPost]
-        public IEnumerable<string> Post([FromBody] string value)
+        public IEnumerable<Todo> Post([FromBody] Todo value)
         {
-            all.Add(value);
-            return all;
+            todoRepo.Create(value);
+            return todoRepo.GetAll();
         }
+
 
         // PUT: api/Todos/5
         [HttpPut("{id}")]

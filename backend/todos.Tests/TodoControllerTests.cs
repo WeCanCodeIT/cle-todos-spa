@@ -22,7 +22,7 @@ namespace todos.Tests
         }
         
         [Fact]
-        public void Get_Returns_List_of_Todos()
+        public void Get_Returns_Count_of_2_Todos()
         {
             // arrange
             var expectedTodos = new List<Todo>()
@@ -38,8 +38,22 @@ namespace todos.Tests
             var countOfTodos = result.Count();
 
             // assert
-            // Assert.Equal(expectedTodos, result.ToList());
             Assert.Equal(2, countOfTodos);
+        }
+
+        [Fact]
+        public void Get_Returns_List_of_Todos()
+        {
+            var expectedTodos = new List<Todo>()
+            {
+                new Todo(1, "First item", "First Owner"),
+                new Todo(2, "Second item", "Second Owner")
+            };
+            todoRepo.GetAll().Returns(expectedTodos);
+
+            var result = underTest.Get();
+
+            Assert.Equal(expectedTodos, result.ToList());
         }
     }
 }

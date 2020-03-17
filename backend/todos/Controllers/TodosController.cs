@@ -57,8 +57,10 @@ namespace todos.Controllers
 
         // PUT: api/Todos/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IEnumerable<Todo> Put([FromBody] Todo todo)
         {
+            todoRepo.Update(todo);
+            return todoRepo.GetAll();
         }
 
         // DELETE: api/ApiWithActions/5

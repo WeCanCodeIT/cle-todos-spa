@@ -107,5 +107,32 @@ namespace todos.Tests
             // which does not work in all cases
             Assert.All(result, item => Assert.Contains("Second item", item.Name));
         }
+
+        [Fact]
+        public void Put_Updates_Todo()
+        {
+            // arrange
+            var originalTodo = new Todo(1, "First item", "First Owner");
+            var expectedTodos = new List<Todo>()
+            {
+                originalTodo
+            };
+            var updatedTodo = new Todo(1, "Updated item", "First Owner");
+
+            // What are the dependencies for the controller's Update action?
+            // They are Update() and GetAll()
+            // To mock Update() we need to modify our fake list with the Remove() then Add() methods 
+            todoRepo.When(t => todoRepo.Update(updatedTodo))
+                .Do(Callback.First(t => expectedTodos.Remove(originalTodo))
+                .Then(t => expectedTodos.Add(updatedTodo)));
+            todoRepo.GetAll().Returns(expectedTodos);
+
+            // act
+            var result = underTest.Put(updatedTodo);
+
+            // assert
+            // Below is an alternative to Assert.Equal(expectedTodos, result.ToList());
+            Assert.All(result, item => Assert.Contains("Updated item", item.Name));
+        }
     }
 }

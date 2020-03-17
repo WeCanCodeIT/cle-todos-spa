@@ -78,5 +78,34 @@ namespace todos.Tests
             // assert
             Assert.Contains(newTodo, result);
         }
+
+        [Fact]
+        public void Delete_Removes_Todo()
+        {
+            // arrange
+            var todoId = 1;
+            var deletedTodo = new Todo(todoId, "First item", "First Owner");
+            var todoList = new List<Todo>()
+            {
+                deletedTodo,
+                new Todo(2, "Second item", "Second Owner")
+            };
+
+            // our controller's Delete() action is dependent on the Repository's
+            // GetById(), Delete(), and GetAll() actions- they all need to be mocked
+            todoRepo.GetById(todoId).Returns(deletedTodo);
+            todoRepo.When(d => d.Delete(deletedTodo))
+                .Do(d => todoList.Remove(deletedTodo));
+            todoRepo.GetAll().Returns(todoList);
+
+
+            // act
+            var result = underTest.Delete(todoId);
+
+            // assert
+            // Below is an alternative to Assert.DoesNotContain(deletedTodo, result), 
+            // which does not work in all cases
+            Assert.All(result, item => Assert.Contains("Second item", item.Name));
+        }
     }
 }

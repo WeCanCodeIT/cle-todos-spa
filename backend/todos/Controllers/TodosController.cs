@@ -63,8 +63,11 @@ namespace todos.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IEnumerable<Todo> Delete(int id)
         {
+            var todo = todoRepo.GetById(id);
+            todoRepo.Delete(todo);
+            return todoRepo.GetAll();
         }
     }
 }

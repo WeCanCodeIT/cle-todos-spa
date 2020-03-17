@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using todos.Models;
+using todos.Repositories;
 
 namespace todos.Controllers
 {
@@ -13,8 +15,15 @@ namespace todos.Controllers
     {
         // private IRepository 
 
+        private IRepository<Todo> todoRepo;
+
+
         // constructor that injects and object of type IRepository
-        
+        public TodosController(IRepository<Todo> todoRepo)
+        {
+            this.todoRepo = todoRepo;
+        }
+
         private static List<string> all = new List<string>()
         {
             "Remodel Bathroom",
@@ -25,9 +34,9 @@ namespace todos.Controllers
 
         // GET: api/Todos
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Todo> Get()
         {
-            return all;
+            return todoRepo.GetAll();
         }
 
         // GET: api/Todos/5

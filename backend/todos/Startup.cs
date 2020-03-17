@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using todos.Models;
+using todos.Repositories;
 
 namespace todos
 {
@@ -29,6 +31,9 @@ namespace todos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc();
+            services.AddDbContext<TodoContext>();
+            services.AddScoped<IRepository<Todo>, TodoRepository>();
 
             // .net 3.1 for cors issue
             services.AddCors(options =>

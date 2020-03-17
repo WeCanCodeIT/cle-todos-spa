@@ -37,6 +37,8 @@ namespace todos
                     Owner = "Jen"
                 }
             );
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

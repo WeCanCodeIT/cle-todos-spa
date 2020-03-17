@@ -31,6 +31,7 @@ namespace todos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMvc();
             services.AddDbContext<TodoContext>();
             services.AddScoped<IRepository<Todo>, TodoRepository>();
 

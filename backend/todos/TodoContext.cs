@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using todos.Models;
 
 namespace todos
 {
@@ -11,7 +13,7 @@ namespace todos
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=TodoApiFall;Trusted_Connection=True;";
+            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=TodoApiSpring2020;Trusted_Connection=True;";
 
             optionsBuilder.UseSqlServer(connectionString);
             //.UseLazyLoadingProxies();
@@ -25,12 +27,14 @@ namespace todos
                 new Todo
                 {
                     Id = 1,
-                    Name = "Remodel Bathroom"
+                    Name = "Remodel Bathroom", 
+                    Owner = "Jennings Construction"
                 },
                 new Todo
                 {
                     Id = 2,
-                    Name = "Finish my laser app"
+                    Name = "Turn bedroom into office",
+                    Owner = "Jen"
                 }
             );
         }

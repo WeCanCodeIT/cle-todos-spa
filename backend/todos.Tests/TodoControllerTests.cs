@@ -45,6 +45,7 @@ namespace todos.Tests
         [Fact]
         public void Get_Returns_List_of_Todos()
         {
+            // arrange
             var expectedTodos = new List<Todo>()
             {
                 new Todo(1, "First item", "First Owner"),
@@ -52,9 +53,32 @@ namespace todos.Tests
             };
             todoRepo.GetAll().Returns(expectedTodos);
 
+            // act
             var result = underTest.Get();
-
+            
+            // assert
             Assert.Equal(expectedTodos, result.ToList());
+        }
+
+        [Fact]
+        public void Get_by_id_Returns_Chosen_Todo()
+        {
+            // arrange
+            var id = 2;
+            var firstTodo = new Todo(1, "First item", "First Owner");
+            var secondTodo = new Todo(2, "Second item", "Second Owner");
+            var expectedTodos = new List<Todo>();
+            expectedTodos.Add(firstTodo);
+            expectedTodos.Add(secondTodo);
+
+            // We need to mock the Repository's GetById() method
+            todoRepo.GetById(id).Returns(secondTodo);
+
+            // act
+            var result = underTest.Get(id);
+
+            // assert
+            Assert.Equal(secondTodo, result);
         }
 
         [Fact]

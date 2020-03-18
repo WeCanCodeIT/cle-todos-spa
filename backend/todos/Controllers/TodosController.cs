@@ -24,14 +24,6 @@ namespace todos.Controllers
             this.todoRepo = todoRepo;
         }
 
-        private static List<string> all = new List<string>()
-        {
-            "Remodel Bathroom",
-            "Finish my laser app",
-            "Do things with kids"
-        };
-
-
         // GET: api/Todos
         [HttpGet]
         public IEnumerable<Todo> Get()
@@ -41,9 +33,9 @@ namespace todos.Controllers
 
         // GET: api/Todos/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public Todo Get(int id)
         {
-            return "value";
+            return todoRepo.GetById(id);
         }
 
         // POST: api/Todos

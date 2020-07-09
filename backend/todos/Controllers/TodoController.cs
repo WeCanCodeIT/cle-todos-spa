@@ -4,34 +4,43 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using todos.Models;
+using todos.Repositories;
 
 namespace todos.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoRWController : ControllerBase
+    public class TodoController : ControllerBase
     {
-        // GET: api/TodoRW
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IRepository<Todo> todoRepo;
+
+        public TodoController(IRepository<Todo> todoRepo)
         {
-            return new string[] { "value1", "value2" };
+            this.todoRepo = todoRepo;
         }
 
-        // GET: api/TodoRW/5
+        // GET: api/Todo
+        [HttpGet]
+        public IEnumerable<Todo> Get()
+        {
+            return todoRepo.GetAll();
+        }
+
+        // GET: api/Todo/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST: api/TodoRW
+        // POST: api/Todo
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/TodoRW/5
+        // PUT: api/Todo/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

@@ -32,6 +32,6 @@ function navHome() {
 function navTodos() {
     const todosButton = document.querySelector('.nav__todos');
     todosButton.addEventListener('click', function(){
-        document.querySelector('.app').innerHTML = Todos();
+        document.querySelector('.app').innerHTML = Todos(todos);
     })
 }

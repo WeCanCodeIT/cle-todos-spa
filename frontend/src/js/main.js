@@ -3,6 +3,8 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Todos from "./components/Todos";
 
+const appDiv = document.querySelector('.app');
+
 pageBuild();
 
 function pageBuild(){
@@ -25,13 +27,20 @@ function footer(){
 function navHome() {
     const homeButton = document.querySelector('.nav__home');
     homeButton.addEventListener('click', function(){
-        document.querySelector('.app').innerHTML = Home();
+        appDiv.innerHTML = Home();
     })
 }
 
 function navTodos() {
     const todosButton = document.querySelector('.nav__todos');
     todosButton.addEventListener('click', function(){
-        document.querySelector('.app').innerHTML = Todos(todos);
+        fetch("https://localhost:44393/api/todo")
+        .then(response => response.json())
+        .then(todos => {
+            appDiv.innerHTML = Todos(todos);
+
+        })
+        .catch(err => console.log(err))
+        // appDiv.innerHTML = Todos(todos);
     })
 }

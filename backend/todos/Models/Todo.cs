@@ -9,6 +9,9 @@ namespace todos.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Owner { get; set; }
+
+
+        public virtual Owner Owner { get; set; }
+        public int OwnerId { get; set; }
     }
 }

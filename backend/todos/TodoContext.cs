@@ -10,13 +10,13 @@ namespace todos
     public class TodoContext : DbContext
     {
         public DbSet<Todo> Todos { get; set; }
+        public DbSet<Owner> Owner { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = "Server=(localdb)\\mssqllocaldb;Database=TodoApiSummer2020;Trusted_Connection=True;";
 
-            optionsBuilder.UseSqlServer(connectionString);
-            //.UseLazyLoadingProxies();
+            optionsBuilder.UseSqlServer(connectionString).UseLazyLoadingProxies();
 
             base.OnConfiguring(optionsBuilder);
         }
@@ -28,21 +28,57 @@ namespace todos
                 {
                     Id = 1,
                     Name = "Remodel Bathroom",
-                    Owner = "Mr. Handyman"
+                    OwnerId = 1
                 },
                 new Todo
                 {
                     Id = 2,
                     Name = "Clean out bedroom",
-                    Owner = "Jen"
+                    OwnerId = 2
                 },
                 new Todo
                 {
                     Id = 3,
                     Name = "Text Mom",
-                    Owner = "Sarah"
+                    OwnerId = 3
+                },
+                new Todo
+                {
+                    Id = 4,
+                    Name = "Fix front doorstep",
+                    OwnerId = 1
+                },
+                new Todo
+                {
+                    Id = 5,
+                    Name = "Listen to .NET Rocks! podcast",
+                    OwnerId = 2
+                },
+                new Todo
+                {
+                    Id = 6,
+                    Name = "Water plants",
+                    OwnerId = 2
                 }
+                
             );
+
+            modelBuilder.Entity<Owner>().HasData(
+                new Owner
+                {
+                    Id = 1,
+                    Name = "Mr. Handyman"
+                },
+                new Owner
+                {
+                    Id = 2,
+                    Name = "Jen"
+                },
+                new Owner
+                {
+                    Id = 3,
+                    Name = "Sarah"
+                });
         }
     }
 }

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using todos;
 
 namespace todos.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    partial class TodoContextModelSnapshot : ModelSnapshot
+    [Migration("20200713214243_AddOwnerModel")]
+    partial class AddOwnerModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,24 +89,6 @@ namespace todos.Migrations
                             Id = 3,
                             Name = "Text Mom",
                             OwnerId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Fix front doorstep",
-                            OwnerId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Listen to .NET Rocks! podcast",
-                            OwnerId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Water plants",
-                            OwnerId = 2
                         });
                 });
 

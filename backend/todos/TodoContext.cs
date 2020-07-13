@@ -60,7 +60,7 @@ namespace todos
                     Name = "Water plants",
                     OwnerId = 2
                 }
-                
+
             );
 
             modelBuilder.Entity<Owner>().HasData(

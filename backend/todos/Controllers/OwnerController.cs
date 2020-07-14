@@ -28,10 +28,10 @@ namespace todos.Controllers
         }
 
         // GET: api/Owner/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public Owner Get(int id)
         {
-            return "value";
+            return ownerRepo.GetById(id);
         }
 
         // POST: api/Owner

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using todos.Models;
 using todos.Repositories;
+using Newtonsoft.Json;
 
 namespace todos
 {
@@ -30,7 +31,10 @@ namespace todos
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(o =>
+            {
+                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddDbContext<TodoContext>();
             services.AddScoped<IRepository<Todo>, TodoRepository>();

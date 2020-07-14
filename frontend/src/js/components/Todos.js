@@ -4,9 +4,9 @@ export default function Todos(todos){
         <ol>
             ${todos.map(todo => {
                 return `
-                    <li>${todo.name} by ${todo.owner}</li>
+                    <li>${todo.name} by ${todo.owner.name}</li>
                 `
-            })}
+            }).join("")}
         </ol>
     `
 }

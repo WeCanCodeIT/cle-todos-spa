@@ -4,6 +4,8 @@ import Home from "./components/Home";
 import Todos from "./components/Todos";
 import Owners from "./components/Owners";
 import Owner from "./components/Owner";
+import apiActions from "./api/apiActions";
+import TodoPostSection from "./components/TodoPostSection";
 
 const appDiv = document.querySelector('.app');
 
@@ -46,6 +48,45 @@ function navTodos() {
         .catch(err => console.log(err))
     })
 }
+
+appDiv.addEventListener("click", function(){
+    const addTodoSection = document.querySelector('.add-todo');
+    if(event.target.classList.contains('add-todo__button')){
+        apiActions.getRequest(`https://localhost:44393/api/owner`,
+            owners => {
+                console.log(owners)
+            addTodoSection.innerHTML= TodoPostSection(owners);
+        })
+    }
+})
+
+appDiv.addEventListener("click", function(){
+    if(event.target.classList.contains('add-todo__submit')){
+        const todoName = event.target.parentElement.querySelector('.add-todo__todoName').value;
+        const todoOwner = event.target.parentElement.querySelector('.add-todo__todoOwners').value;
+
+        console.log(todoName);
+
+
+        var requestBody = {
+            Name: todoName,
+            OwnerId: todoOwner
+        }
+
+        apiActions.postRequest(
+            "https://localhost:44393/api/todo",
+            requestBody,
+            toDos => {
+                console.log("Todos returned from back end");
+                console.log(toDos);
+                appDiv.innerHTML = Todos(toDos);
+            }
+        )
+    }
+})
+
+
+
 
 function navOwners() {
     const ownersButton = document.querySelector('.nav__owners');

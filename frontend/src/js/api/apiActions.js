@@ -1,4 +1,5 @@
 function getRequest(location, callback) {
+    console.log('using generic get request')
     fetch(location)
     .then(response => response.json())
     .then(data => callback(data))

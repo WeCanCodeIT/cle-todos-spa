@@ -38,14 +38,13 @@ function navHome() {
 
 function navTodos() {
     const todosButton = document.querySelector('.nav__todos');
-    todosButton.addEventListener('click', function(){
-        fetch("https://localhost:44393/api/todo")
-        .then(response => response.json())
-        .then(todos => {
-            appDiv.innerHTML = Todos(todos);
+    const todosEndpoint = "https://localhost:44393/api/todo";
+    const todosCallback = todos => {
+        appDiv.innerHTML = Todos(todos);
+    }
 
-        })
-        .catch(err => console.log(err))
+    todosButton.addEventListener('click', function(){
+        apiActions.getRequest(todosEndpoint, todosCallback);
     })
 }
 
@@ -90,14 +89,14 @@ appDiv.addEventListener("click", function(){
 
 function navOwners() {
     const ownersButton = document.querySelector('.nav__owners');
+    const ownersEndpoint = 'https://localhost:44393/api/owner';
+    const ownersCallback = owners => {
+        appDiv.innerHTML = Owners(owners);
+        ownerNameButton();
+    }
+
     ownersButton.addEventListener('click', function(){
-        fetch('https://localhost:44393/api/owner')
-        .then(response => response.json())
-        .then(owners => {
-            appDiv.innerHTML = Owners(owners);
-            ownerNameButton();
-        })
-        .catch(err => console.log(err))
+        apiActions.getRequest(ownersEndpoint, ownersCallback);
     })
 }
 

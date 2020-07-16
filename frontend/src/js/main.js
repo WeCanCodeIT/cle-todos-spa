@@ -67,7 +67,7 @@ appDiv.addEventListener("click", function(){
         console.log(todoName);
 
 
-        var requestBody = {
+        const requestBody = {
             Name: todoName,
             OwnerId: todoOwner
         }
@@ -115,3 +115,36 @@ function ownerNameButton() {
         })
     })
 }
+
+// When the user clicks the submit Todo button from the Owner component, 
+// we will call the post fetch request
+// and send the new values for Todo Name and Owner id to the backend
+// and then redisplay the Owner component 
+appDiv.addEventListener('click', function(){
+    if(event.target.classList.contains('owner__add-todo__submit')){
+        const todoName = event.target.parentElement.querySelector('.owner__add-todo__name').value;
+        const ownerId = event.target.id;
+
+        console.log(`owner id: ${ownerId}, todo name: ${todoName}`);
+
+        const requestBody = {
+            Name: todoName,
+            OwnerId: ownerId
+        }
+
+        const ownerCallback = () => {
+            apiActions.getRequest(
+                `https://localhost:44393/api/owner/${ownerId}`,
+                owner => {
+                    console.log(owner);
+                    appDiv.innerHTML = Owner(owner);
+                })
+        }
+
+        apiActions.postRequest(
+            `https://localhost:44393/api/todo`,
+            requestBody,
+            ownerCallback
+        )
+    }
+})

@@ -29,9 +29,9 @@ namespace todos.Controllers
 
         // GET: api/Todo/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Todo Get(int id)
         {
-            return "value";
+            return todoRepo.GetById(id);
         }
 
         // POST: api/Todo
@@ -44,14 +44,19 @@ namespace todos.Controllers
 
         // PUT: api/Todo/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IEnumerable<Todo> Put([FromBody] Todo todo)
         {
+            todoRepo.Update(todo);
+            return todoRepo.GetAll();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IEnumerable<Todo> Delete(int id)
         {
+            var todo = todoRepo.GetById(id);
+            todoRepo.Delete(todo);
+            return todoRepo.GetAll();
         }
     }
 }

@@ -148,3 +148,19 @@ appDiv.addEventListener('click', function(){
         )
     }
 })
+
+// When the user clicks the delete button, we will call the delete fetch request
+// and then redisplay the Todos component
+appDiv.addEventListener('click', function(){
+    if(event.target.classList.contains('todo-item__delete')){
+        const todoId = event.target.parentElement.querySelector('.todo-item__id').value;
+        console.log(todoId);
+
+        apiActions.deleteRequest(
+            `https://localhost:44393/api/todo/${todoId}`,
+            todos => {
+                appDiv.innerHTML = Todos(todos);
+            }
+        )
+    }
+})

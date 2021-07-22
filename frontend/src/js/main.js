@@ -8,6 +8,8 @@ const appDiv = document.getElementById("app");
 const todoURL = "https://localhost:44393/api/Todo";
 const ownerURL = "https://localhost:44393/api/Owner";
 const todaysDate = new Date(Date.now());
+const currentDate = todaysDate.getFullYear() + '-' + (todaysDate.getMonth()+1) + '-' + todaysDate.getDate();
+const dueDate = todaysDate.getFullYear() + '-' + (todaysDate.getMonth()+1) + '-' + (todaysDate.getDate()+5);
 
 export default() => {
     setupHeader();
@@ -43,7 +45,54 @@ function navOwners(){
     ownersNavButton.addEventListener('click', function(){
         fetch(ownerURL).then(response => response.json()).then(data => {
             appDiv.innerHTML = Owners(data);
+            OwnerTodos();
         });
+    });
+}
+
+function OwnerTodos(){
+    const ownerElements = document.querySelectorAll(".todo_owner");
+    ownerElements.forEach(element => {
+        element.addEventListener('click', function(){
+            let ownerId = element.id;
+            let newOwnerURL = ownerURL + "/" + ownerId;
+
+            fetch(newOwnerURL).then(response => response.json())
+            .then(data => {
+                appDiv.innerHTML = Owner(data);
+                OwnerAddTodo();
+            });
+
+        });
+    });
+}
+
+function OwnerAddTodo(){
+    const saveTodoButton = document.querySelector(".todoAddButton");
+    saveTodoButton.addEventListener('click', function(){
+        let ownerId = saveTodoButton.id;
+        let newTodoName = document.getElementById("todoName").value;
+        
+        const requestBody = {
+            Name: newTodoName,
+            OwnerId: ownerId,
+            CreatedOn: currentDate,
+            DueBy: dueDate,
+            IsDone: false
+        };
+
+        fetch(todoURL, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        }).then(response => response.json())
+        .then(data => {
+            appDiv.innerHTML = Owner(data);
+            OwnerAddTodo();
+        });
+
     });
 }
 
@@ -52,9 +101,7 @@ function AddTodo(){
     saveTodoButton.addEventListener('click', function(){
         let todoName = document.getElementById("todoName").value;
         let ownerId = document.getElementById("owners").value;
-        //2021-07-22
-        let currentDate = todaysDate.getFullYear() + '-' + (todaysDate.getMonth()+1) + '-' + todaysDate.getDate();
-        let dueDate = todaysDate.getFullYear() + '-' + (todaysDate.getMonth()+1) + '-' + (todaysDate.getDate()+5);
+
 
         const requestBody = {
             Name: todoName,
@@ -62,7 +109,7 @@ function AddTodo(){
             CreatedOn: currentDate,
             DueBy: dueDate,
             IsDone: false
-        }
+        };
 
         if(ownerId != 'Select an Owner'){
             fetch(todoURL, {
@@ -74,6 +121,7 @@ function AddTodo(){
             }).then(response => response.json())
             .then(data => {
                 appDiv.innerHTML = Owner(data);
+                OwnerAddTodo();
             });
         }else{
             let p = document.getElementById("responseMessage");

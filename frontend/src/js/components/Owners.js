@@ -5,7 +5,7 @@ export default function Owners(owners){
             ${owners.map(owner =>{
                 return `
                     <li>
-                        <h4>${owner.name} - (${owner.email})</h4>
+                        <h4 class="todo_owner" id="${owner.id}">${owner.name} - (${owner.email})</h4>
                     </li>
                 `;
             }).join('')}

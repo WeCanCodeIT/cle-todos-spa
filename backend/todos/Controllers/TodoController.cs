@@ -30,5 +30,14 @@ namespace todos.Controllers
             return _db.Todos.Find(id);
         }
 
+        [HttpPost]
+        public Owner PostTodo([FromBody]Todo todo)
+        {
+            _db.Todos.Add(todo);
+            _db.SaveChanges();
+
+            return _db.Owners.Find(todo.OwnerId);
+        }
+
     }
 }

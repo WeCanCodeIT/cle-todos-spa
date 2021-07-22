@@ -10,5 +10,13 @@ export default function Todos(todos){
                `;
            }).join('')}
         </ol>
+
+        <section class="todoForm">
+           <input type="text" id="todoName" placeholder='Enter the name of this todo item' />
+           <select id="owners">
+           </select>
+           <button id="saveTodoBtn">Save Item</button>
+        </section>
+
     `;
 }
